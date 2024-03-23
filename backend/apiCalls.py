@@ -89,3 +89,5 @@ def isValidUser(user):
         return True
 
 
+# print(isValidUser('akkafakka'))
+# print(getSolvedByUser('akkafakka'))

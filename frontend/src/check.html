@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="margin: 1em">
+      <div class="inviteUsersForm" style="display: none">
+        <form class="invite-users-action-form" method="post" action="">
+          <input
+            type="hidden"
+            name="csrf_token"
+            value="6bb3bd7da0b743bb9aea3d6fa674ae3d"
+          />
+          <table class="table-form" style="width: 55em">
+            <tbody>
+              <tr>
+                <td class="field-name">
+                  <label for="handlesToInvite">Handles:</label>
+                </td>
+                <td>
+                  <textarea
+                    class="field-input bottom-space-small"
+                    id="handlesToInvite"
+                    name="handlesToInvite"
+                    style="
+                      width: 50em;
+                      height: 20em;
+                      min-height: 5em;
+                      max-height: 50em;
+                      resize: vertical;
+                    "
+                  ></textarea>
+                </td>
+              </tr>
+              <tr class="subscription-row">
+                <td>&nbsp;</td>
+                <td>
+                  <div class="shiftUp error__handlesToInvite">
+                    <span
+                      class="error for__handlesToInvite"
+                      style="display: none"
+                      >&nbsp;</span
+                    >
+                    <span class="notice for__handlesToInvite">&nbsp;</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="field-name">
+                  <label for="notify">Notify:</label>
+                </td>
+                <td>
+                  <input
+                    class="notify"
+                    name="notify"
+                    id="notify"
+                    type="checkbox"
+                  />
+                </td>
+              </tr>
+              <tr class="subscription-row">
+                <td>&nbsp;</td>
+                <td>
+                  <div class="shiftUp">
+                    <span class="notice for__notify"
+                      >Notify by private message</span
+                    >
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2" style="text-align: center">
+                  <input class="submit" type="submit" value="Invite" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <input type="hidden" name="_tta" value="125" />
+        </form>
+      </div>
+
+      <div style="position: relative; height: 2em" class="action-link">
+        <div style="position: absolute; right: 0; margin: 0 0 1em 0">
+          <a href="#" class="addInvitation"
+            ><img
+              src="//codeforces.org/s/34596/images/icons/new-problem-16x16.png"
+            />
+            Invite users</a
+          >
+        </div>
+      </div>
+
+      <div
+        class="datatable"
+        style="background-color: #e1e1e1; padding-bottom: 3px"
+      >
+        <div class="lt">&nbsp;</div>
+        <div class="rt">&nbsp;</div>
+        <div class="lb">&nbsp;</div>
+        <div class="rb">&nbsp;</div>
+
+        <div
+          style="padding: 4px 0 0 6px; font-size: 1.4rem; position: relative"
+        >
+          Invited users
+
+          <div style="position: absolute; right: 0.25em; top: 0.35em">
+            <span
+              style="padding: 0; position: relative; bottom: 2px"
+              class="rowCount"
+            ></span>
+
+            <img
+              class="closed"
+              src="//codeforces.org/s/34596/images/icons/control.png"
+            />
+
+            <span class="filter" style="display: none">
+              <img
+                class="opened"
+                src="//codeforces.org/s/34596/images/icons/control-270.png"
+              />
+              <input
+                style="
+                  padding: 0 0 0 20px;
+                  position: relative;
+                  bottom: 2px;
+                  border: 1px solid #aaa;
+                  height: 17px;
+                  font-size: 1.3rem;
+                "
+              />
+            </span>
+          </div>
+        </div>
+        <div
+          style="
+            background-color: white;
+            margin: 0.3em 3px 0 3px;
+            position: relative;
+          "
+        >
+          <div class="ilt">&nbsp;</div>
+          <div class="irt">&nbsp;</div>
+          <table class="">
+            <thead>
+              <tr>
+                <th style="text-align: left" class="top left">Handle</th>
+                <th style="width: 12em" class="top right">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="no-items visible">
+                <td
+                  style="text-align: left"
+                  colspan="32"
+                  class="bottom dark left right"
+                >
+                  No items
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <script type="text/javascript">
+        $(document).ready(function () {
+          // Create new ':containsIgnoreCase' selector for search
+          jQuery.expr[":"].containsIgnoreCase = function (a, i, m) {
+            return (
+              jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0
+            );
+          };
+
+          if (window.updateDatatableFilter == undefined) {
+            window.updateDatatableFilter = function (i) {
+              var parent = $(i).parent().parent().parent().parent();
+              $("tr.no-items", parent).remove();
+              $("tr", parent).hide().removeClass("visible");
+              var text = $(i).val();
+              if (text) {
+                $("tr" + ":containsIgnoreCase('" + text + "')", parent)
+                  .show()
+                  .addClass("visible");
+              } else {
+                parent.find(".rowCount").text("");
+                $("tr", parent).show().addClass("visible");
+              }
+
+              var found = false;
+              var visibleRowCount = 0;
+              $("tr", parent).each(function () {
+                if (!found) {
+                  if ($(this).find("th").size() > 0) {
+                    $(this).show().addClass("visible");
+                    found = true;
+                  }
+                }
+                if ($(this).hasClass("visible")) {
+                  visibleRowCount++;
+                }
+              });
+              if (text) {
+                parent
+                  .find(".rowCount")
+                  .text("Matches: " + (visibleRowCount - (found ? 1 : 0)));
+              }
+              if (visibleRowCount == (found ? 1 : 0)) {
+                $(
+                  '<tr class=\'no-items visible\'><td style="text-align:left;"colspan="32">No items<\/td><\/tr>'
+                ).appendTo($(parent).find("table"));
+              }
+              $(parent).find("tr td").removeClass("dark");
+              $(parent).find("tr.visible:odd td").addClass("dark");
+            };
+
+            $(".datatable .closed").click(function () {
+              var parent = $(this).parent();
+              $(this).hide();
+              $(".filter", parent).fadeIn(function () {
+                $("input", parent)
+                  .val("")
+                  .focus()
+                  .css("border", "1px solid #aaa");
+              });
+            });
+
+            $(".datatable .opened").click(function () {
+              var parent = $(this).parent().parent();
+              $(".filter", parent).fadeOut(function () {
+                $(".closed", parent).show();
+                $("input", parent)
+                  .val("")
+                  .each(function () {
+                    window.updateDatatableFilter(this);
+                  });
+              });
+            });
+
+            $(".datatable .filter input").keyup(function (e) {
+              window.updateDatatableFilter(this);
+              e.preventDefault();
+              e.stopPropagation();
+            });
+
+            $(".datatable table").each(function () {
+              var found = false;
+              $("tr", this).each(function () {
+                if (!found && $(this).find("th").size() == 0) {
+                  found = true;
+                }
+              });
+              if (!found) {
+                $(
+                  '<tr class=\'no-items visible\'><td style="text-align:left;"colspan="32">No items<\/td><\/tr>'
+                ).appendTo(this);
+              }
+            });
+
+            // Applies styles to datatables.
+            $(".datatable").each(function () {
+              $(this).find("tr:first th").addClass("top");
+              $(this).find("tr:last td").addClass("bottom");
+              $(this).find("tr:odd td").addClass("dark");
+              $(this)
+                .find("tr td:first-child, tr th:first-child")
+                .addClass("left");
+              $(this)
+                .find("tr td:last-child, tr th:last-child")
+                .addClass("right");
+            });
+
+            $(".datatable table.tablesorter").each(function () {
+              $(this).bind("sortEnd", function () {
+                $(".datatable").each(function () {
+                  $(this)
+                    .find("th, td")
+                    .removeClass("top")
+                    .removeClass("bottom")
+                    .removeClass("left")
+                    .removeClass("right")
+                    .removeClass("dark");
+                  $(this).find("tr:first th").addClass("top");
+                  $(this).find("tr:last td").addClass("bottom");
+                  $(this).find("tr:odd td").addClass("dark");
+                  $(this)
+                    .find("tr td:first-child, tr th:first-child")
+                    .addClass("left");
+                  $(this)
+                    .find("tr td:last-child, tr th:last-child")
+                    .addClass("right");
+                });
+              });
+            });
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>
+<!-- <tr class="highlighted-row">
+  <td style="text-align: left" class="bottom dark left">
+    <a
+      href="/profile/akkafakka"
+      title="Expert akkafakka"
+      class="rated-user user-blue"
+      >akkafakka</a
+    >
+  </td>
+  <td class="bottom dark right">
+    <a class="deleteInvitation" href="#" data-userid="3144941">Delete</a>
+  </td>
+</tr> -->
+<form class="handleForm" method="post" autocomplete="off">
+  <div style="padding: 1em; text-align: right">
+    <label style="padding-right: 1em"
+      >Handle:
+      <input
+        style="width: 12em"
+        type="text"
+        class="handleBox ac_input"
+        autocomplete="off"
+      />
+    </label>
+  </div>
+  <div style="padding: 0 1em 1em 1em; text-align: right">
+    <input
+      style="height: 1.65em; padding: 0 0.75em"
+      type="submit"
+      value="Find"
+    />
+  </div>
+</form>
+<div class="roundbox sidebox borderTopRound">
+  <div class="caption titled">
+    &rarr; Find user
+    <div class="top-links"></div>
+  </div>
+  <form class="handleForm" method="post">
+    <div style="padding: 1em; text-align: right">
+      <label style="padding-right: 1em"
+        >Handle:
+        <input style="width: 12em" type="text" class="handleBox" />
+      </label>
+    </div>
+    <div style="padding: 0 1em 1em 1em; text-align: right">
+      <input
+        style="height: 1.65em; padding: 0 0.75em"
+        type="submit"
+        value="Find"
+      />
+    </div>
+  </form>
+</div>
+<tr>
+  <td style="text-align: left" class="bottom dark left">
+    <a
+      href="/profile/akkafakka"
+      title="Expert akkafakka"
+      class="rated-user user-blue"
+      >akkafakka</a
+    >
+  </td>
+  <td class="bottom dark right">
+    <a class="deleteInvitation" href="#">Delete</a>
+  </td>
+</tr>
+
+<div
+  class="ac_results"
+  style="
+    position: absolute;
+    width: 200px;
+    top: 1682.1px;
+    left: 2036.8px;
+    display: block;
+  "
+>
+  <ul style="max-height: 180px; overflow: auto">
+    <li class="ac_even">Deep<strong>akK</strong>arthick</li>
+    <li class="ac_odd"><strong>akk</strong>i_code</li>
+    <li class="ac_even">Mohamed_H<strong>akk</strong>ou</li>
+    <li class="ac_odd">deep<strong>akk</strong>rsoni18</li>
+    <li class="ac_even">MUDIT_K<strong>AKK</strong>AR</li>
+    <li class="ac_odd">mal<strong>akk</strong>k07</li>
+    <li class="ac_even">keerthanash<strong>akk</strong></li>
+    <li class="ac_odd"><strong>akk</strong>inani1211</li>
+    <li class="ac_even"><strong>Akk</strong>i465</li>
+    <li class="ac_odd">b<strong>akk</strong>42</li>
+  </ul>
+</div>
+
+]else if (e.key === "Enter" && listRef.current) {
+      e.preventDefault();
+      const focusedItem = Array.from(listRef.current.children).find(
+        (item) => document.activeElement === item
+      );
+      if (focusedItem) {
+        const optionIndex = parseInt(focusedItem.getAttribute("data-index"));
+        const selectedOption = searchOptions[optionIndex];
+        handleAddOptionClick(selectedOption);
+      }
+    }

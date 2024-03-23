@@ -1,0 +1,74 @@
+._MashupContestEditFrame_frame ._MashupContestEditFrame_title {
+  text-align: center;
+  font-size: 1.8em;
+  color: #3b5998 !important;
+}
+._MashupContestEditFrame_frame form._MashupContestEditFrame_createMashup table {
+  margin: 2em 0 1em 0;
+  width: 100%;
+}
+._MashupContestEditFrame_frame
+  form._MashupContestEditFrame_createMashup
+  table
+  #contestName,
+._MashupContestEditFrame_frame
+  form._MashupContestEditFrame_createMashup
+  table
+  #parentContestIdAndName {
+  width: 99%;
+}
+._MashupContestEditFrame_frame
+  form._MashupContestEditFrame_createMashup
+  table
+  #contestDuration {
+  width: 15em;
+}
+._MashupContestEditFrame_frame
+  form._MashupContestEditFrame_createMashup
+  table
+  #cloneContest {
+  width: auto;
+}
+._MashupContestEditFrame_frame
+  form._MashupContestEditFrame_createMashup
+  table
+  tr
+  td:first-child {
+  width: 10em;
+}
+._MashupContestEditFrame_frame .problemTable tbody tr:last-child td:last-child {
+  text-align: left;
+}
+._MashupContestEditFrame_frame
+  ._MashupContestEditFrame_problemRow
+  ._MashupContestEditFrame_name {
+  float: left;
+}
+._MashupContestEditFrame_frame
+  ._MashupContestEditFrame_problemRow
+  ._MashupContestEditFrame_tags {
+  float: right;
+  font-size: 1.1rem;
+  padding-top: 1px;
+  text-align: right;
+}
+._MashupContestEditFrame_frame
+  ._MashupContestEditFrame_problemRow
+  ._MashupContestEditFrame_problemRatingCell {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+._MashupContestEditFrame_frame
+  ._MashupContestEditFrame_problemRow
+  ._MashupContestEditFrame_problemSolvedCell {
+  font-size: 1.1rem;
+}
+._MashupContestEditFrame_frame
+  form._MashupContestEditFrame_addProblem
+  input[name="problemQuery"] {
+  margin-bottom: 0.5em;
+  width: 99%;
+}
+._MashupContestEditFrame_frame form._MashupContestEditFrame_saveMashup {
+  text-align: center;
+}
