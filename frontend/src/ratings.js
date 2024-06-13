@@ -56,7 +56,11 @@ const InputGenerator = ({ count }) => {
     }
   };
 
+<<<<<<< HEAD
   // console.log(inputs);
+=======
+  console.log(inputs);
+>>>>>>> a570377b2296e7e9cda70cb43aec7b20fb1f4d12
 
   return (
     <div style={{ marginTop: "50px" }}>
@@ -66,7 +70,11 @@ const InputGenerator = ({ count }) => {
           backgroundColor: "#e1e1e1",
           paddingBottom: "3px",
           width: "93%",
+<<<<<<< HEAD
           // marginLeft: "100px",
+=======
+          marginLeft: "100px",
+>>>>>>> a570377b2296e7e9cda70cb43aec7b20fb1f4d12
           borderRadius: "10px",
           fontFamily: "Lexend",
         }}
