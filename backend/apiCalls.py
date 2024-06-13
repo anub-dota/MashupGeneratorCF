@@ -1,5 +1,8 @@
 import requests
 import random
+import json
+import os
+from datetime import datetime,timedelta
 
 def getFromCF(url,params=None):
     try:
@@ -14,8 +17,30 @@ def getFromCF(url,params=None):
         return -1
 
 
+def save_data_to_file(data):
+    with open("all_problems.json", 'w') as f:
+        json.dump(data, f)
+
+def load_data_from_file():
+    with open("all_problems.json", 'r') as f:
+        content = json.load(f)
+        return content
+
+def is_file_recent():
+    if os.path.exists("all_problems.json"):
+        file_time = datetime.fromtimestamp(os.path.getmtime("all_problems.json"))
+        if datetime.now() - file_time < timedelta(days=1):
+            return True
+    return False
+
+
 def getAllProblems():
-    allProblems = getFromCF("https://codeforces.com/api/problemset.problems")
+    allProblems = []
+    if(is_file_recent()):
+        allProblems=load_data_from_file()
+    else:
+        allProblems = getFromCF("https://codeforces.com/api/problemset.problems")
+        save_data_to_file(allProblems)
     if allProblems !=-1:
         condensedProblems =[]
         for problem in allProblems['result']['problems']:
@@ -28,7 +53,8 @@ def getAllProblems():
         return condensedProblems
     
     return -1
-    
+
+
 
 def getSolvedByUser(user):
     solvedByUser = getFromCF("https://codeforces.com/api/user.status",{'handle':user})
@@ -91,3 +117,4 @@ def isValidUser(user):
 
 # print(isValidUser('akkafakka'))
 # print(getSolvedByUser('akkafakka'))
+# print(getAllProblems())
