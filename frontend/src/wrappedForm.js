@@ -29,10 +29,7 @@ const WrappedForm = () => {
         method="post"
         // onSubmit={handleSubmit}
         // style={{ marginLeft: "100px" }}
-<<<<<<< HEAD
         style={{display: "flex", flexDirection: "column", alignItems: "left"}}
-=======
->>>>>>> a570377b2296e7e9cda70cb43aec7b20fb1f4d12
       >
         <table className="table-form">
           <tbody>
@@ -181,13 +178,8 @@ const WrappedForm = () => {
         <InputGenerator count={Problem} />
         <input
           tabindex="10"
-<<<<<<< HEAD
           type="button"
           class="submit-btn"
-=======
-          type="submit"
-          class="submit"
->>>>>>> a570377b2296e7e9cda70cb43aec7b20fb1f4d12
           value="Create Mashup Contest"
           onClick={handleSubmit}
         ></input>

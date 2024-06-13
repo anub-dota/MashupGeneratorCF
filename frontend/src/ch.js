@@ -36,11 +36,7 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
           backgroundColor: "#e1e1e1",
           paddingBottom: "3px",
           width: "93%",
-<<<<<<< HEAD
           // marginLeft: "100px",
-=======
-          marginLeft: "100px",
->>>>>>> a570377b2296e7e9cda70cb43aec7b20fb1f4d12
           borderRadius: "10px",
           fontFamily: "Lexend",
           marginTop: showSearch ? "80px" : "0",
@@ -100,10 +96,7 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
                       <td className="bottom dark right">
                         <button
                           className="deleteInvitation"
-<<<<<<< HEAD
                           type = "button"
-=======
->>>>>>> a570377b2296e7e9cda70cb43aec7b20fb1f4d12
                           // onClick={() => handleDeleteClick(index)}
                           onClick={() => handleDeleteClick(index)}
                           style={{
