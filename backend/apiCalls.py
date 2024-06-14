@@ -45,6 +45,8 @@ def getAllProblems():
         condensedProblems =[]
         for problem in allProblems['result']['problems']:
             try:
+                if len(problem['tags']) > 0 and problem['tags'][0] == '*special' : continue
+                # condensedProblems.append({'tags' : problem['tags']})
                 condensedProblems.append({'id':str(problem['contestId']) + problem['index'] , 'rating':problem['rating']})
             except KeyError:
                 # print(str(problem['contestId']) + problem['index'])
@@ -117,4 +119,5 @@ def isValidUser(user):
 
 # print(isValidUser('akkafakka'))
 # print(getSolvedByUser('akkafakka'))
-# print(getAllProblems())
+# problems = getAllProblems()
+# if len(problems) > 0 : save_data_to_file(problems)
