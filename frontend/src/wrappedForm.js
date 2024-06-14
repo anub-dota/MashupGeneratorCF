@@ -35,14 +35,14 @@ const WrappedForm = () => {
           <tbody>
             <tr className="contest-profile-row">
               <td>
-                <label for="contestName" style={{ fontFamily: "Lexend" }}>
+                <label htmlFor="contestName" style={{ fontFamily: "Lexend" }}>
                   Name:
                 </label>
               </td>
               <td>
                 <input
                   id="contestName"
-                  tabindex="1"
+                  tabIndex="1"
                   name="contestName"
                   // value=""
                   type="text"
@@ -68,7 +68,7 @@ const WrappedForm = () => {
 
             <tr className="contest-profile-row">
               <td>
-                <label for="contestDuration" style={{ fontFamily: "Lexend" }}>
+                <label htmlFor="contestDuration" style={{ fontFamily: "Lexend" }}>
                   Duration:
                 </label>
               </td>
@@ -106,14 +106,14 @@ const WrappedForm = () => {
             </tr>
             <tr className="contest-profile-row">
               <td>
-                <label for="contestProblems" style={{ fontFamily: "Lexend" }}>
+                <label htmlFor="contestProblems" style={{ fontFamily: "Lexend" }}>
                   Number of Problems:
                 </label>
               </td>
               <td>
                 <input
                   id="contestProblems"
-                  tabindex="3"
+                  tabIndex="3"
                   name="contestProblems"
                   // value=""
                   type="number"
@@ -145,14 +145,14 @@ const WrappedForm = () => {
             </tr>
             <tr className="contest-profile-row">
               <td>
-                <label for="contestTime" style={{ fontFamily: "Lexend" }}>
+                <label htmlFor="contestTime" style={{ fontFamily: "Lexend" }}>
                   Start Time :
                 </label>
               </td>
               <td>
                 <input
                   id="contestTime"
-                  tabindex="4"
+                  tabIndex="4"
                   name="contestTime"
                   // value=""
                   type="time"
@@ -177,9 +177,9 @@ const WrappedForm = () => {
         <Invite />
         <InputGenerator count={Problem} />
         <input
-          tabindex="10"
+          tabIndex="10"
           type="button"
-          class="submit-btn"
+          className="submit-btn"
           value="Create Mashup Contest"
           onClick={handleSubmit}
         ></input>

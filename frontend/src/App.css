@@ -1369,3 +1369,7 @@ p.sttext {
   padding: 0.5rem;
   margin:4rem auto;
 }
+.addInvitation{
+  text-decoration: underline;
+  cursor: pointer;
+}

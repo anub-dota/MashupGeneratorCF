@@ -44,6 +44,7 @@ const Invite = () => {
       setSearchTerm("");
       setSearchOptions([]);
     }
+    console.log(invitedUsers);
   };
   const handleAddOptionClick = (option) => {
     //   setInvitedUsers([...invitedUsers, option]);
@@ -67,31 +68,31 @@ const Invite = () => {
     }
   }, [showSearch]);
 
-  const handleKeyDown = (e) => {
-    if (e.key === "ArrowDown" && listRef.current) {
-      e.preventDefault();
-      const currentFocusIndex = Array.from(listRef.current.children).findIndex(
-        (item) => document.activeElement === item
-      );
-      const nextIndex =
-        currentFocusIndex === -1
-          ? 0
-          : currentFocusIndex === searchOptions.length - 1
-          ? 0
-          : Math.min(currentFocusIndex + 1, searchOptions.length - 1);
-      listRef.current.children[nextIndex].focus();
-    } else if (e.key === "Enter" && listRef.current) {
-      e.preventDefault();
-      const focusedItem = Array.from(listRef.current.children).find(
-        (item) => document.activeElement === item
-      );
-      if (focusedItem) {
-        const optionIndex = parseInt(focusedItem.getAttribute("data-index"));
-        const selectedOption = searchOptions[optionIndex];
-        handleAddOptionClick(selectedOption);
-      }
-    }
-  };
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "ArrowDown" && listRef.current) {
+  //     e.preventDefault();
+  //     const currentFocusIndex = Array.from(listRef.current.children).findIndex(
+  //       (item) => document.activeElement === item
+  //     );
+  //     const nextIndex =
+  //       currentFocusIndex === -1
+  //         ? 0
+  //         : currentFocusIndex === searchOptions.length - 1
+  //         ? 0
+  //         : Math.min(currentFocusIndex + 1, searchOptions.length - 1);
+  //     listRef.current.children[nextIndex].focus();
+  //   } else if (e.key === "Enter" && listRef.current) {
+  //     e.preventDefault();
+  //     const focusedItem = Array.from(listRef.current.children).find(
+  //       (item) => document.activeElement === item
+  //     );
+  //     if (focusedItem) {
+  //       const optionIndex = parseInt(focusedItem.getAttribute("data-index"));
+  //       const selectedOption = searchOptions[optionIndex];
+  //       handleAddOptionClick(selectedOption);
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -122,7 +123,7 @@ const Invite = () => {
                       onChange={(e) => {
                         handleInputChange(e.target.value);
                       }}
-                      onKeyDown={handleKeyDown}
+                      // onKeyDown={handleKeyDown}
                     />
                     {searchOptions.length > 0 && searchTerm.length >= 1 && (
                       <div
@@ -139,7 +140,7 @@ const Invite = () => {
                           style={{ maxHeight: "180px", overflow: "auto" }}
                           ref={listRef}
                           tabIndex="-1"
-                          onKeyDown={handleKeyDown}
+                          // onKeyDown={handleKeyDown}
                         >
                           {searchOptions.map((options, id) => {
                             return (
@@ -163,7 +164,7 @@ const Invite = () => {
                 <div style={{ padding: "0 1em 1em 1em", textAlign: "right" }}>
                   <input
                     style={{ height: "1.65em", padding: "0 0.75em" }}
-                    type="submit"
+                    type="button"
                     value="Add"
                     onClick={handleAddClick}
                   />
@@ -171,9 +172,9 @@ const Invite = () => {
               </form>
             </>
           )}
-          <a href="#" className="addInvitation" onClick={handleInviteClick}>
+          <a className="addInvitation" onClick={handleInviteClick}>
             <img src="//codeforces.org/s/34596/images/icons/new-problem-16x16.png" />
-            Invite users
+            {showSearch ? "Hide Panel" : "Invite users"}
           </a>
         </div>
       </div>

@@ -101,7 +101,7 @@ const InputGenerator = ({ count }) => {
                   <tr className="no-items visible">
                     <td
                       style={{ textAlign: "left" }}
-                      colspan="32"
+                      colSpan="32"
                       className="bottom dark left right"
                     >
                       No items

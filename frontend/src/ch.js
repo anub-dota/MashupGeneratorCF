@@ -26,11 +26,6 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
   return (
     <>
       <div
-        style={{ position: "relative", height: "2em" }}
-        className="action-link"
-      ></div>
-
-      <div
         className="datatable"
         style={{
           backgroundColor: "#e1e1e1",
@@ -80,7 +75,7 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
               ) : (
                 <>
                   {invitedUsers.map((user, index) => (
-                    <tr>
+                    <tr key ={index}>
                       <td
                         style={{ textAlign: "left" }}
                         className="bottom dark left"
