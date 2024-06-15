@@ -81,7 +81,7 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
                         className="bottom dark left"
                       >
                         <a
-                          href={`/profile/${user.name}`}
+                          href={`https://codeforces.com/profile/${user.name}`}
                           title={`${user.title} ${user.name}`}
                           className={`rated-user user-${user.color}`}
                         >

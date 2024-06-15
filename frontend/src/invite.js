@@ -13,17 +13,52 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
   //   { name: "Abhi6645", title: "Specialist", color: "cyan" },
   //   { name: "Anu30bhab", title: "Specialist", color: "cyan" },
   // ]);
-  const fetchData = (value) => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => {
-        const results = json.filter((user) => {
-          return value && user && user.name && user.name.includes(value);
-        });
-        console.log(results);
-        setSearchOptions(results);
-      });
+  const fetchData = async (value) => {
+    // console.log(value)
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     const results = json.filter((user) => {
+    //       return value && user && user.name && user.name.includes(value);
+    //     });
+    //     console.log(results);
+    //     setSearchOptions(results);
+    //     // conso/le.log(searchOptions);
+    //   });
+
+    const url = new URL("http://localhost:5000/usersearch");
+    url.searchParams.append('q', value);
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      // console.log(data);
+      setSearchOptions(data);
+      // console.log(searchOptions);
+    } catch (error) {
+      console.error('Error fetching search options:', error);
+    }
   };
+
+  useEffect(() => {
+    // console.log(searchOptions);
+  }, [searchOptions]);
+  
+  const fetchUserInfo = async (value) =>{
+    console.log(value)
+    const url = new URL("http://localhost:5000/userinfo");
+    url.searchParams.append('id', value);
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      setInvitedUsers([...invitedUsers, data]);
+      setSearchTermObject(data);
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+    }
+  }
 
   const handleDeleteClick = (index) => {
     // Prevent the default behavior of the form submission
@@ -40,9 +75,11 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
 
   const handleAddClick = () => {
     if (searchTermObject) {
-      setInvitedUsers([...invitedUsers, searchTermObject]);
-      setSearchTerm("");
-      setSearchOptions([]);
+      fetchUserInfo(searchTermObject.name).then(addedUserInfo => {
+        // setInvitedUsers(prev => [...prev, addedUserInfo]);
+        setSearchTerm("");
+        setSearchOptions([]);
+      });
     }
     console.log(invitedUsers);
   };
@@ -68,31 +105,31 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
     }
   }, [showSearch]);
 
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "ArrowDown" && listRef.current) {
-  //     e.preventDefault();
-  //     const currentFocusIndex = Array.from(listRef.current.children).findIndex(
-  //       (item) => document.activeElement === item
-  //     );
-  //     const nextIndex =
-  //       currentFocusIndex === -1
-  //         ? 0
-  //         : currentFocusIndex === searchOptions.length - 1
-  //         ? 0
-  //         : Math.min(currentFocusIndex + 1, searchOptions.length - 1);
-  //     listRef.current.children[nextIndex].focus();
-  //   } else if (e.key === "Enter" && listRef.current) {
-  //     e.preventDefault();
-  //     const focusedItem = Array.from(listRef.current.children).find(
-  //       (item) => document.activeElement === item
-  //     );
-  //     if (focusedItem) {
-  //       const optionIndex = parseInt(focusedItem.getAttribute("data-index"));
-  //       const selectedOption = searchOptions[optionIndex];
-  //       handleAddOptionClick(selectedOption);
-  //     }
-  //   }
-  // };
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown" && listRef.current) {
+      e.preventDefault();
+      const currentFocusIndex = Array.from(listRef.current.children).findIndex(
+        (item) => document.activeElement === item
+      );
+      const nextIndex =
+        currentFocusIndex === -1
+          ? 0
+          : currentFocusIndex === searchOptions.length - 1
+          ? 0
+          : Math.min(currentFocusIndex + 1, searchOptions.length - 1);
+      listRef.current.children[nextIndex].focus();
+    } else if (e.key === "Enter" && listRef.current) {
+      e.preventDefault();
+      const focusedItem = Array.from(listRef.current.children).find(
+        (item) => document.activeElement === item
+      );
+      if (focusedItem) {
+        const optionIndex = parseInt(focusedItem.getAttribute("data-index"));
+        const selectedOption = searchOptions[optionIndex];
+        handleAddOptionClick(selectedOption);
+      }
+    }
+  };
 
   return (
     <>
@@ -123,7 +160,7 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
                       onChange={(e) => {
                         handleInputChange(e.target.value);
                       }}
-                      // onKeyDown={handleKeyDown}
+                      onKeyDown={handleKeyDown}
                     />
                     {searchOptions.length > 0 && searchTerm.length >= 1 && (
                       <div
@@ -140,7 +177,7 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
                           style={{ maxHeight: "180px", overflow: "auto" }}
                           ref={listRef}
                           tabIndex="-1"
-                          // onKeyDown={handleKeyDown}
+                          onKeyDown={handleKeyDown}
                         >
                           {searchOptions.map((options, id) => {
                             return (
@@ -151,6 +188,7 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
                                 }}
                                 tabIndex="0"
                                 data-index={id}
+                                style={{textAlign: "left"}}
                               >
                                 {options.name}
                               </li>

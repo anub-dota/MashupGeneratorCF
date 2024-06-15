@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from bot import CreateContest
 from apiCalls import findMatchingNames, userData
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
-
+cors = CORS(app)
+@cross_origin()
 @app.route('/process', methods=['POST'])
 def process_endpoint():
     if request.is_json:
@@ -22,18 +24,21 @@ def process_endpoint():
 @app.route('/usersearch', methods=['GET'])
 def user_search():
     search_term = request.args.get('q')
+    print("search_term",search_term)
     if not search_term:
         return jsonify({"error": "Missing query parameter 'q'"}), 400
 
     try:
         results = findMatchingNames(search_term)
-        return jsonify(results), 200
+        result = [{'name': name} for name in results]
+        return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/userinfo', methods=['GET'])
 def user_info():
     user_id = request.args.get('id')
+    # print("user_id",user_id)
     if not user_id:
         return jsonify({"error": "Missing query parameter 'id'"}), 400
 

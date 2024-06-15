@@ -9,10 +9,10 @@ const WrappedForm = () => {
   const [startTime, setStartTime] = useState('');
   const [contestName, setContestName] = useState('');
   const [invitedUsers, setInvitedUsers] = useState([
-    { name: "akkafakka", title: "Expert", color: "blue" },
-    { name: "aka26nsh", title: "Specialist", color: "cyan" },
-    { name: "Abhi6645", title: "Specialist", color: "cyan" },
-    { name: "Anu30bhab", title: "Specialist", color: "cyan" },
+    // { name: "akkafakka", title: "Expert", color: "blue" },
+    // { name: "aka26nsh", title: "Specialist", color: "cyan" },
+    // { name: "Abhi6645", title: "Specialist", color: "cyan" },
+    // { name: "Anu30bhab", title: "Specialist", color: "cyan" },
   ]);
 
   const [inputs, setInputs] = useState([]);

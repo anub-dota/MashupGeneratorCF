@@ -22,7 +22,7 @@ def save_data_to_file(filename,data):
         json.dump(data, f)
 
 def load_data_from_file(filename):
-    with open("all_problems.json", 'r') as f:
+    with open(filename, 'r') as f:
         content = json.load(f)
         return content
 
@@ -65,9 +65,10 @@ def getAllUsers():
         allUsers = getFromCF("https://codeforces.com/api/user.ratedList?activeOnly=true&includeRetired=false")
         all_users = [user["handle"] for user in allUsers['result']]
         save_data_to_file("all_users.json",all_users)
-    if allUsers !=-1:
-        return all_users
+    # print(all_users[:10])
+    # if allUsers !=-1:
 
+    return all_users
 
 def findMatchingNames(name):
     allUsers = getAllUsers()
@@ -153,6 +154,8 @@ def colorFromRating(rating):
 
 def userData(user):
     userdata = getFromCF("https://codeforces.com/api/user.info",{'handles':user})
+    # print(userdata)
+    # print(user)
     if userdata == -1:
         return -1
     else:
