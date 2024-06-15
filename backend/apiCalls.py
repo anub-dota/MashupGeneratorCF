@@ -17,35 +17,35 @@ def getFromCF(url,params=None):
         return -1
 
 
-def save_data_to_file(data):
-    with open("all_problems.json", 'w') as f:
+def save_data_to_file(filename,data):
+    with open(filename, 'w') as f:
         json.dump(data, f)
 
-def load_data_from_file():
+def load_data_from_file(filename):
     with open("all_problems.json", 'r') as f:
         content = json.load(f)
         return content
 
-def is_file_recent():
-    if os.path.exists("all_problems.json"):
-        file_time = datetime.fromtimestamp(os.path.getmtime("all_problems.json"))
-        if datetime.now() - file_time < timedelta(days=1):
+def is_file_recent(filename,days=1):
+    if os.path.exists(filename):
+        file_time = datetime.fromtimestamp(os.path.getmtime(filename))
+        if datetime.now() - file_time < timedelta(days=days):
             return True
     return False
 
-
 def getAllProblems():
     allProblems = []
-    if(is_file_recent()):
-        allProblems=load_data_from_file()
+    if(is_file_recent("all_problems.json")):
+        allProblems=load_data_from_file("all_problems.json")
     else:
         allProblems = getFromCF("https://codeforces.com/api/problemset.problems")
-        save_data_to_file(allProblems)
+        save_data_to_file("all_problems.json",allProblems)
     if allProblems !=-1:
         condensedProblems =[]
         for problem in allProblems['result']['problems']:
             try:
-                if len(problem['tags']) > 0 and problem['tags'][0] == '*special' : continue
+                if len(problem['tags']) > 0 and problem['tags'][0] == '*special' : 
+                    continue
                 # condensedProblems.append({'tags' : problem['tags']})
                 condensedProblems.append({'id':str(problem['contestId']) + problem['index'] , 'rating':problem['rating']})
             except KeyError:
@@ -56,7 +56,25 @@ def getAllProblems():
     
     return -1
 
+def getAllUsers():
+    #implement save to file similar to getallproblems
+    all_users = []
+    if(is_file_recent("all_users.json")):
+        all_users=load_data_from_file("all_users.json")
+    else:
+        allUsers = getFromCF("https://codeforces.com/api/user.ratedList?activeOnly=true&includeRetired=false")
+        all_users = [user["handle"] for user in allUsers['result']]
+        save_data_to_file("all_users.json",all_users)
+    if allUsers !=-1:
+        return all_users
 
+
+def findMatchingNames(name):
+    allUsers = getAllUsers()
+    if allUsers == -1:
+        return []
+    matchingNames = [user for user in allUsers if name.lower() in user.lower()]
+    return matchingNames[:10]
 
 def getSolvedByUser(user):
     solvedByUser = getFromCF("https://codeforces.com/api/user.status",{'handle':user})
@@ -115,6 +133,30 @@ def isValidUser(user):
         return False
     else:
         return True
+def colorFromRating(rating):
+    if rating<1200:
+        return "grey"
+    elif rating<1400:
+        return "green"
+    elif rating<1600:
+        return "cyan"
+    elif rating<1900:
+        return "blue"
+    elif rating<2100:
+        return "purple"
+    elif rating<2400:
+        return "orange"
+    elif rating<3000:
+        return "red"
+    else:
+        return "black"
+
+def userData(user):
+    userdata = getFromCF("https://codeforces.com/api/user.info",{'handles':user})
+    if userdata == -1:
+        return -1
+    else:
+        return {"name":user,"title":userdata['result'][0]["rank"],"color":colorFromRating(userdata['result'][0]["rating"])}
 
 
 # print(isValidUser('akkafakka'))
