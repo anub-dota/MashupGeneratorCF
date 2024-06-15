@@ -4,30 +4,96 @@ import Invite from "./invite";
 import "./App.css";
 
 const WrappedForm = () => {
-  const [Problem, setProblem] = useState(0);
-  const [Duration, setDuration] = useState(0);
+  const [numberOfProblems, setnumberOfProblems] = useState(0);
+  const [contestDuration, setcontestDuration] = useState(0);
+  const [startTime, setStartTime] = useState('');
+  const [contestName, setContestName] = useState('');
+  const [invitedUsers, setInvitedUsers] = useState([
+    { name: "akkafakka", title: "Expert", color: "blue" },
+    { name: "aka26nsh", title: "Specialist", color: "cyan" },
+    { name: "Abhi6645", title: "Specialist", color: "cyan" },
+    { name: "Anu30bhab", title: "Specialist", color: "cyan" },
+  ]);
+
+  const [inputs, setInputs] = useState([]);
+  const [done, setDone] = useState([]);
+
 
   const handleProblemChange = (e) => {
     const newProblem = parseInt(e.target.value);
-    setProblem(newProblem);
+    setnumberOfProblems(newProblem);
   };
+
   const handleDurationChange = (e) => {
     let newDuration = parseInt(e.target.value);
     if (newDuration > 240) {
       newDuration = 240;
     }
-    setDuration(newDuration);
+    setcontestDuration(newDuration);
   };
-  const handleSubmit = (e) => {
+
+  const handleContestNameChange = (e) => {
+    setContestName(e.target.value);
+    console.log(contestName);
+  };
+
+  const handleStartTimeChange = (e) => {
+    setStartTime(e.target.value);
+  };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     alert("Submitted");
-    // Prevent the default form submission behavior
+
+    let f = 0;
+    for (let i = 0; i < done.length; i++) {
+      if (!done[i]) {
+        f = 1;
+        break;
+      }
+    }
+
+    if (f === 1) {
+      alert("Please fill all the fields correctly");
+      return;
+    }
+    const formData = {
+      contestName,
+      contestDuration,
+      numberOfProblems,
+      startTime,
+      invitedUsers
+    };
+
+    try{
+      const response = await fetch("http://localhost:5000/process",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if(response.ok){
+        const jsonResponse = await response.json();
+        console.log(jsonResponse);
+        alert("Contest Created");
+      }
+      else{
+        throw new Error("Request to submit failed!");
+      }
+    }
+    catch(error){
+      console.error('Error submitting form:', error);
+      alert('Error submitting form');
+    }
   };
   return (
     <>
       <form
         method="post"
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         // style={{ marginLeft: "100px" }}
         style={{display: "flex", flexDirection: "column", alignItems: "left"}}
       >
@@ -44,7 +110,8 @@ const WrappedForm = () => {
                   id="contestName"
                   tabIndex="1"
                   name="contestName"
-                  // value=""
+                  value={contestName}
+                  onChange={handleContestNameChange}
                   type="text"
                 />
               </td>
@@ -78,7 +145,7 @@ const WrappedForm = () => {
                   tabIndex="2"
                   name="contestDuration"
                   type="number"
-                  value={Duration}
+                  value={contestDuration}
                   min={10}
                   max={240}
                   onChange={handleDurationChange}
@@ -117,8 +184,8 @@ const WrappedForm = () => {
                   name="contestProblems"
                   // value=""
                   type="number"
-                  value={Problem}
-                  min={0}
+                  value={numberOfProblems}
+                  min={1}
                   max={10}
                   onChange={handleProblemChange}
                 />
@@ -154,6 +221,8 @@ const WrappedForm = () => {
                   id="contestTime"
                   tabIndex="4"
                   name="contestTime"
+                  value={startTime}
+                  onChange={handleStartTimeChange}
                   // value=""
                   type="time"
                 />
@@ -174,8 +243,8 @@ const WrappedForm = () => {
             </tr>
           </tbody>
         </table>
-        <Invite />
-        <InputGenerator count={Problem} />
+        <Invite invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} />
+        <InputGenerator count={numberOfProblems} inputs={inputs} setInputs={setInputs} done={done} setDone={setDone} />
         <input
           tabIndex="10"
           type="button"

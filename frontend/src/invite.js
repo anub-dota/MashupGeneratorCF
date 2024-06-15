@@ -2,17 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import DiffOptions from "./Diffoptions";
 import CheckInvite from "./ch";
 
-const Invite = () => {
+const Invite = ({invitedUsers, setInvitedUsers}) => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchOptions, setSearchOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermObject, setSearchTermObject] = useState("");
-  const [invitedUsers, setInvitedUsers] = useState([
-    { name: "akkafakka", title: "Expert", color: "blue" },
-    { name: "aka26nsh", title: "Specialist", color: "cyan" },
-    { name: "Abhi6645", title: "Specialist", color: "cyan" },
-    { name: "Anu30bhab", title: "Specialist", color: "cyan" },
-  ]);
+  // const [invitedUsers, setInvitedUsers] = useState([
+  //   { name: "akkafakka", title: "Expert", color: "blue" },
+  //   { name: "aka26nsh", title: "Specialist", color: "cyan" },
+  //   { name: "Abhi6645", title: "Specialist", color: "cyan" },
+  //   { name: "Anu30bhab", title: "Specialist", color: "cyan" },
+  // ]);
   const fetchData = (value) => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())

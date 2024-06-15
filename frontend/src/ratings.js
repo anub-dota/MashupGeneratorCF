@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const InputGenerator = ({ count }) => {
+const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
   count = Math.min(count, 10);
-  const [inputs, setInputs] = useState([]);
   const [errors, setErrors] = useState([]);
-
+  
   //   useEffect(() => {
   //     setInputs(Array.from({ length: count }, () => ""));
   //   }, [count]);
@@ -20,19 +19,25 @@ const InputGenerator = ({ count }) => {
     }));
     setInputs(initialInputs);
     setErrors(Array.from({ length: count }, () => false));
+    setDone(Array.from({ length: count }, () => false));
   }, [count]);
+
+  useEffect(() => {
+    console.log(inputs);
+    console.log(done);
+  },[inputs, errors, done]);
 
   const handleInputChange = (index, value) => {
     if (/^\d+$/.test(value)) {
       const numericValue = parseInt(value, 10);
+      const newInputs = [...inputs];
+      setInputs(newInputs);
+      newInputs[index] = numericValue;
       if (
         numericValue >= 800 &&
         numericValue <= 3500 &&
         numericValue % 100 === 0
       ) {
-        const newInputs = [...inputs];
-        newInputs[index] = numericValue;
-        setInputs(newInputs);
         // cins;
         // Clear error state if input is correct
         setErrors((prevErrors) => {
@@ -40,11 +45,22 @@ const InputGenerator = ({ count }) => {
           newErrors[index] = false;
           return newErrors;
         });
+        setDone((prevDone) => {
+          const newDone = [...prevDone];
+          newDone[index] = true;
+          return newDone;
+        });
       } else {
         setErrors((prevErrors) => {
           const newErrors = [...prevErrors];
           newErrors[index] = true;
           return newErrors;
+        });
+
+        setDone((prevDone) => {
+          const newDone = [...prevDone];
+          newDone[index] = false;
+          return newDone;
         });
       }
     } else {
@@ -54,6 +70,9 @@ const InputGenerator = ({ count }) => {
         return newErrors;
       });
     }
+    console.log(inputs);
+    console.log(errors);
+    console.log(done);
   };
 
   // console.log(inputs);
