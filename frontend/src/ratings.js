@@ -23,8 +23,8 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
   }, [count]);
 
   useEffect(() => {
-    console.log(inputs);
-    console.log(done);
+    // console.log(inputs);
+    // console.log(done);
   },[inputs, errors, done]);
 
   const handleInputChange = (index, value) => {
@@ -70,9 +70,9 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
         return newErrors;
       });
     }
-    console.log(inputs);
-    console.log(errors);
-    console.log(done);
+    // console.log(inputs);
+    // console.log(errors);
+    // console.log(done);
   };
 
   // console.log(inputs);

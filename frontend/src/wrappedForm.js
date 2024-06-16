@@ -71,8 +71,12 @@ const WrappedForm = () => {
     try{
       const response = await fetch("http://localhost:5000/process",{
         method: "POST",
+        // mode: 'no-cors',
         headers: {
-          "Content-Type": "application/json"
+          // "Access-Control-Allow-Headers" : "Content-Type",
+          // "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          // "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
         },
         body: JSON.stringify(formData)
       });
@@ -248,7 +252,7 @@ const WrappedForm = () => {
         <Invite invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} />
         <InputGenerator count={numberOfProblems} inputs={inputs} setInputs={setInputs} done={done} setDone={setDone} />
         <input
-          tabIndex="10"
+          // tabIndex="5"
           type="button"
           className="submit-btn"
           value="Create Mashup Contest"
