@@ -26,8 +26,8 @@ def CreateContest(params):
 
     options = FirefoxOptions()
     options.add_argument("--headless")
-    driver = webdriver.Firefox(options=options)
-    # driver = webdriver.Firefox()
+    # driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox()
     driver.get('https://codeforces.com/enter')
 
     load_dotenv()

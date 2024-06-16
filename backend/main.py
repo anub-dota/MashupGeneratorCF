@@ -11,14 +11,16 @@ def process_endpoint():
         print("hehe")
         data = request.get_json()
         print("data",data)
-        try:
-            processed = CreateContest(data)
-            return jsonify(processed), 200
-        except ValueError as e:
-            return jsonify({"error": str(e)}), 400
-        except Exception as e:
-            print("Error",e)
-            return jsonify({"error": str(e)}), 400
+        # try:
+        #     processed = CreateContest(data)
+        #     return jsonify(processed), 200
+        # except ValueError as e:
+        #     return jsonify({"error": str(e)}), 400
+        # except Exception as e:
+        #     print("Error",e)
+        #     return jsonify({"error": str(e)}), 400
+        processed = CreateContest(data)
+        return jsonify(processed), 200
 
     else:
         return jsonify({"error": "Request must be JSON"}), 400
