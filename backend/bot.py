@@ -77,8 +77,10 @@ def CreateContest(params):
     startday = WebDriverWait(driver,30).until(EC.element_to_be_clickable((By.NAME,"startDay")))
     starttime = WebDriverWait(driver,30).until(EC.element_to_be_clickable((By.NAME,"startTime")))
 
-    startday.send_keys(datetime.datetime.strptime(params["startTime"].split("T")[0],"%Y-%m-%d").strftime("%b/%d/%Y"))
-    starttime.send_keys(params["startTime"].split("T")[1].split("Z")[0])  
+    # startday.send_keys(datetime.datetime.strptime(params["startTime"].split("T")[0],"%Y-%m-%d").strftime("%b/%d/%Y"))
+    # starttime.send_keys(params["startTime"].split("T")[1].split("Z")[0])  
+    starttime.send_keys(params["startTime"])  
+    startday.send_keys(datetime.datetime.today().strftime("%b/%d/%Y"))
     pttype = Select(driver.find_element(By.NAME,"participationType"))
     pttype.select_by_value("PERSONS_ONLY")
     driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
