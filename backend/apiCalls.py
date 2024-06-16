@@ -75,7 +75,7 @@ def findMatchingNames(name):
     if allUsers == -1:
         return []
     matchingNames = [user for user in allUsers if name.lower() in user.lower()]
-    print(matchingNames)
+    # print(matchingNames)
     return matchingNames[:10]
 
 def getSolvedByUser(user):

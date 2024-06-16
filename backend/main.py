@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
 from bot import CreateContest
 from apiCalls import findMatchingNames, userData
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 app = Flask(__name__)
-cors = CORS(app)
-@cross_origin()
+CORS(app)
+
 @app.route('/process', methods=['POST'])
 def process_endpoint():
     if request.is_json:

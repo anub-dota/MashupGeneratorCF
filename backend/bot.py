@@ -116,7 +116,7 @@ def CreateContest(params):
     # textbox = driver.switch_to.active_element
     for user in users:
         if apiCalls.isValidUser(user):
-            textbox.send_keys(user + Keys.SPACE + Keys.ENTER)
+            textbox.send_keys(user["name"] + Keys.SPACE + Keys.ENTER)
     #print html content inside the textbox parent element
 
     time.sleep(0.5)
