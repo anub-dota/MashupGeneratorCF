@@ -62,7 +62,7 @@ def getAllUsers():
     if(is_file_recent("all_users.json")):
         all_users=load_data_from_file("all_users.json")
     else:
-        allUsers = getFromCF("https://codeforces.com/api/user.ratedList?activeOnly=true&includeRetired=false")
+        allUsers = getFromCF("https://codeforces.com/api/user.ratedList?includeRetired=false")
         all_users = [user["handle"] for user in allUsers['result']]
         save_data_to_file("all_users.json",all_users)
     # print(all_users[:10])
@@ -75,6 +75,7 @@ def findMatchingNames(name):
     if allUsers == -1:
         return []
     matchingNames = [user for user in allUsers if name.lower() in user.lower()]
+    print(matchingNames)
     return matchingNames[:10]
 
 def getSolvedByUser(user):
@@ -136,7 +137,7 @@ def isValidUser(user):
         return True
 def colorFromRating(rating):
     if rating<1200:
-        return "grey"
+        return "gray"
     elif rating<1400:
         return "green"
     elif rating<1600:
@@ -144,13 +145,13 @@ def colorFromRating(rating):
     elif rating<1900:
         return "blue"
     elif rating<2100:
-        return "purple"
+        return "violet"
     elif rating<2400:
         return "orange"
     elif rating<3000:
         return "red"
     else:
-        return "black"
+        return "legendary"
 
 def userData(user):
     userdata = getFromCF("https://codeforces.com/api/user.info",{'handles':user})

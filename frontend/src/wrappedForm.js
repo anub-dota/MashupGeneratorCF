@@ -63,8 +63,10 @@ const WrappedForm = () => {
       contestDuration,
       numberOfProblems,
       startTime,
-      invitedUsers
+      invitedUsers,
+      inputs
     };
+    console.log(formData);  
 
     try{
       const response = await fetch("http://localhost:5000/process",{

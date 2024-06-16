@@ -8,13 +8,16 @@ cors = CORS(app)
 @app.route('/process', methods=['POST'])
 def process_endpoint():
     if request.is_json:
+        print("hehe")
         data = request.get_json()
+        print("data",data)
         try:
             processed = CreateContest(data)
             return jsonify(processed), 200
         except ValueError as e:
             return jsonify({"error": str(e)}), 400
         except Exception as e:
+            print("Error",e)
             return jsonify({"error": str(e)}), 400
 
     else:
@@ -24,7 +27,7 @@ def process_endpoint():
 @app.route('/usersearch', methods=['GET'])
 def user_search():
     search_term = request.args.get('q')
-    print("search_term",search_term)
+    # print("search_term",search_term)
     if not search_term:
         return jsonify({"error": "Missing query parameter 'q'"}), 400
 

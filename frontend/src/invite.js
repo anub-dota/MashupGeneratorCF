@@ -53,12 +53,31 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
       const response = await fetch(url);
       const data = await response.json();
       console.log(data);
-      setInvitedUsers([...invitedUsers, data]);
+      setInvitedUsers((prevUsers) => {
+        let f = 0;
+        prevUsers.map((user) => {
+          if (user.name === data.name) {
+            f = 1;
+          }
+        })
+        if (f === 0) {
+          return [...prevUsers, data];
+        }
+        else{
+          return [...prevUsers];
+        }
+      });
+  
+
       setSearchTermObject(data);
     } catch (error) {
       console.error('Error fetching user info:', error);
     }
   }
+
+  // useEffect(() => {
+  //   console.log(invitedUsers);
+  // }, [invitedUsers]);
 
   const handleDeleteClick = (index) => {
     // Prevent the default behavior of the form submission

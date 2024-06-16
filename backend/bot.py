@@ -53,8 +53,8 @@ def CreateContest(params):
     driver.find_element(By.ID,"contestDuration").send_keys(params["contestDuration"])
 
     # #adding the problems
-    users = params["users"]
-    ratings = params["ratings"]
+    users = params["invitedUsers"]
+    ratings = params["inputs"]
 
     problems = apiCalls.getProblemList(users=users,ratingList=ratings)
     print("Problemset generated")
