@@ -18,6 +18,8 @@ const WrappedForm = () => {
   const [inputs, setInputs] = useState([]);
   const [done, setDone] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState(null);
 
   const handleProblemChange = (e) => {
     const newProblem = parseInt(e.target.value);
@@ -43,6 +45,7 @@ const WrappedForm = () => {
 
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     alert("Submitted");
 
@@ -84,6 +87,7 @@ const WrappedForm = () => {
       if(response.ok){
         const jsonResponse = await response.json();
         console.log(jsonResponse);
+        setResponse(jsonResponse);
         alert("Contest Created");
       }
       else{
@@ -94,9 +98,18 @@ const WrappedForm = () => {
       console.error('Error submitting form:', error);
       alert('Error submitting form');
     }
+    finally{
+      setLoading(false);
+      alert(response);
+    }
   };
   return (
     <>
+    {loading && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <p>Loading...</p>
+        </div>
+      )}
       <form
         method="post"
         onSubmit={handleSubmit}

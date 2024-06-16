@@ -8,9 +8,9 @@ CORS(app)
 @app.route('/process', methods=['POST'])
 def process_endpoint():
     if request.is_json:
-        print("hehe")
+        # print("hehe")
         data = request.get_json()
-        print("data",data)
+        # print("data",data)
         # try:
         #     processed = CreateContest(data)
         #     return jsonify(processed), 200
