@@ -4,15 +4,7 @@ import "./App.css";
 const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
   count = Math.min(count, 10);
   const [errors, setErrors] = useState([]);
-  
-  //   useEffect(() => {
-  //     setInputs(Array.from({ length: count }, () => ""));
-  //   }, [count]);
-  //   useEffect(() => {
-  //     setErrors(Array.from({ length: count }, () => false));
-  //   }, [count]);
   useEffect(() => {
-    // Initialize inputs and errors arrays with initial values
     const initialInputs = Array.from({ length: count }, () => ({
       value: "",
       error: false,
@@ -23,8 +15,6 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
   }, [count]);
 
   useEffect(() => {
-    // console.log(inputs);
-    // console.log(done);
   },[inputs, errors, done]);
 
   const handleInputChange = (index, value) => {
@@ -38,8 +28,6 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
         numericValue <= 3500 &&
         numericValue % 100 === 0
       ) {
-        // cins;
-        // Clear error state if input is correct
         setErrors((prevErrors) => {
           const newErrors = [...prevErrors];
           newErrors[index] = false;
@@ -70,12 +58,8 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
         return newErrors;
       });
     }
-    // console.log(inputs);
-    // console.log(errors);
-    // console.log(done);
   };
 
-  // console.log(inputs);
 
   return (
     <div style={{ marginTop: "50px" }}>
@@ -85,7 +69,6 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
           backgroundColor: "#e1e1e1",
           paddingBottom: "3px",
           width: "93%",
-          // marginLeft: "100px",
           borderRadius: "10px",
           fontFamily: "Lexend",
         }}
@@ -143,7 +126,6 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
                           <td>
                             <input
                               type="text"
-                              //   value={inputs[index]}
                               onChange={(e) =>
                                 handleInputChange(index, e.target.value)
                               }

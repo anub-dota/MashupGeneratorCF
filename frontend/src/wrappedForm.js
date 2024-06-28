@@ -8,12 +8,7 @@ const WrappedForm = () => {
   const [contestDuration, setcontestDuration] = useState(0);
   const [startTime, setStartTime] = useState('');
   const [contestName, setContestName] = useState('');
-  const [invitedUsers, setInvitedUsers] = useState([
-    // { name: "akkafakka", title: "Expert", color: "blue" },
-    // { name: "aka26nsh", title: "Specialist", color: "cyan" },
-    // { name: "Abhi6645", title: "Specialist", color: "cyan" },
-    // { name: "Anu30bhab", title: "Specialist", color: "cyan" },
-  ]);
+  const [invitedUsers, setInvitedUsers] = useState([]);
 
   const [inputs, setInputs] = useState([]);
   const [done, setDone] = useState([]);
@@ -36,7 +31,7 @@ const WrappedForm = () => {
 
   const handleContestNameChange = (e) => {
     setContestName(e.target.value);
-    console.log(contestName);
+    // console.log(contestName);
   };
 
   const handleStartTimeChange = (e) => {
@@ -69,17 +64,13 @@ const WrappedForm = () => {
       invitedUsers,
       inputs
     };
-    console.log(formData);  
+    // console.log(formData);  
 
     try{
       const response = await fetch("http://localhost:5000/process",{
         method: "POST",
-        // mode: 'no-cors',
         headers: {
-          // "Access-Control-Allow-Headers" : "Content-Type",
-          // "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
-          // "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
         },
         body: JSON.stringify(formData)
       });
@@ -113,7 +104,6 @@ const WrappedForm = () => {
       <form
         method="post"
         onSubmit={handleSubmit}
-        // style={{ marginLeft: "100px" }}
         style={{display: "flex", flexDirection: "column", alignItems: "left"}}
       >
         <table className="table-form">
@@ -201,7 +191,6 @@ const WrappedForm = () => {
                   id="contestProblems"
                   tabIndex="3"
                   name="contestProblems"
-                  // value=""
                   type="number"
                   value={numberOfProblems}
                   min={1}
@@ -242,7 +231,6 @@ const WrappedForm = () => {
                   name="contestTime"
                   value={startTime}
                   onChange={handleStartTimeChange}
-                  // value=""
                   type="time"
                 />
               </td>
@@ -265,7 +253,6 @@ const WrappedForm = () => {
         <Invite invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} />
         <InputGenerator count={numberOfProblems} inputs={inputs} setInputs={setInputs} done={done} setDone={setDone} />
         <input
-          // tabIndex="5"
           type="button"
           className="submit-btn"
           value="Create Mashup Contest"

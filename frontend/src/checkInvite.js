@@ -1,23 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 
 const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
-  //   const [showSearch, setShowSearch] = useState(false);
-
-  //   const [invitedUsers, setInvitedUsers] = useState([
-  //     { name: "akkafakka", title: "Expert", color: "blue" },
-  //     { name: "aka26nsh", title: "Specialist", color: "cyan" },
-  //     { name: "Abhi6645", title: "Specialist", color: "cyan" },
-  //     { name: "Anu30bhab", title: "Specialist", color: "cyan" },
-  //   ]);
 
   const handleDeleteClick = (index) => {
-    // Prevent the default behavior of the form submission
-    console.log("hehe");
-    // event.preventDefault();
-
-    // event.stopPropagation();
     setInvitedUsers((prevUsers) => {
-      // Filter out the user at the specified index
       const updatedUsers = prevUsers.filter((user, i) => i !== index);
       return updatedUsers;
     });
@@ -31,7 +17,6 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
           backgroundColor: "#e1e1e1",
           paddingBottom: "3px",
           width: "93%",
-          // marginLeft: "100px",
           borderRadius: "10px",
           fontFamily: "Lexend",
           marginTop: showSearch ? "80px" : "0",
@@ -92,7 +77,6 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
                         <button
                           className="deleteInvitation"
                           type = "button"
-                          // onClick={() => handleDeleteClick(index)}
                           onClick={() => handleDeleteClick(index)}
                           style={{
                             backgroundColor: "transparent",

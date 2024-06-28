@@ -1,58 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
-import DiffOptions from "./Diffoptions";
-import CheckInvite from "./ch";
+// import DiffOptions from "./Diffoptions";
+import CheckInvite from "./checkInvite";
 
 const Invite = ({invitedUsers, setInvitedUsers}) => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchOptions, setSearchOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermObject, setSearchTermObject] = useState("");
-  // const [invitedUsers, setInvitedUsers] = useState([
-  //   { name: "akkafakka", title: "Expert", color: "blue" },
-  //   { name: "aka26nsh", title: "Specialist", color: "cyan" },
-  //   { name: "Abhi6645", title: "Specialist", color: "cyan" },
-  //   { name: "Anu30bhab", title: "Specialist", color: "cyan" },
-  // ]);
   const fetchData = async (value) => {
-    // console.log(value)
-    // fetch("https://jsonplaceholder.typicode.com/users")
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     const results = json.filter((user) => {
-    //       return value && user && user.name && user.name.includes(value);
-    //     });
-    //     console.log(results);
-    //     setSearchOptions(results);
-    //     // conso/le.log(searchOptions);
-    //   });
-
     const url = new URL("http://localhost:5000/usersearch");
     url.searchParams.append('q', value);
 
     try {
       const response = await fetch(url);
       const data = await response.json();
-      // console.log(data);
       setSearchOptions(data);
-      // console.log(searchOptions);
     } catch (error) {
       console.error('Error fetching search options:', error);
     }
   };
 
   useEffect(() => {
-    // console.log(searchOptions);
   }, [searchOptions]);
   
   const fetchUserInfo = async (value) =>{
-    console.log(value)
+    // console.log(value)
     const url = new URL("http://localhost:5000/userinfo");
     url.searchParams.append('id', value);
 
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setInvitedUsers((prevUsers) => {
         let f = 0;
         prevUsers.map((user) => {
@@ -75,35 +54,17 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(invitedUsers);
-  // }, [invitedUsers]);
-
-  const handleDeleteClick = (index) => {
-    // Prevent the default behavior of the form submission
-    console.log("hehe");
-    // event.preventDefault();
-
-    // // event.stopPropagation();
-    // setInvitedUsers((prevUsers) => {
-    //   // Filter out the user at the specified index
-    //   const updatedUsers = prevUsers.filter((user, i) => i !== index);
-    //   return updatedUsers;
-    // });
-  };
 
   const handleAddClick = () => {
     if (searchTermObject) {
       fetchUserInfo(searchTermObject.name).then(addedUserInfo => {
-        // setInvitedUsers(prev => [...prev, addedUserInfo]);
         setSearchTerm("");
         setSearchOptions([]);
       });
     }
-    console.log(invitedUsers);
+    // console.log(invitedUsers);
   };
   const handleAddOptionClick = (option) => {
-    //   setInvitedUsers([...invitedUsers, option]);
     setSearchTerm(option.name);
     setSearchOptions([]);
     setSearchTermObject(option);
