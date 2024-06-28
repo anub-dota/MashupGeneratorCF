@@ -64,7 +64,7 @@ cd frontend
 npm start
 ```
 
-- Open backend [Flask](https://flask.palletsprojects.com/en/3.0.x/) on another terminal
+- Open backend [Flask](https://flask.palletsprojects.com/en/3.0.x/) server on another terminal
 
 ```
 cd backend
@@ -72,11 +72,18 @@ cd backend
 python main.py
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
 
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+After running the above commands go to 
+```
+http://localhost:3000/
+```
+
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=150px height=150px src="/assets/1.png" alt="1"></a>
+</p>
 
 
 ## ⛏️ Built Using <a name = "built_using"></a>
