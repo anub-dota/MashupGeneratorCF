@@ -1372,4 +1372,18 @@ p.sttext {
 .addInvitation{
   text-decoration: underline;
   cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.star{
+  color: red;
+}
+
+.small{
+  font-size: 1.2rem;
+}
+.load{
+  color: #ffffff;
+  text-align: center;
 }

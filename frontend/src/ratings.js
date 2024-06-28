@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
+const InputGenerator = ({ count, inputs, setInputs, done, setDone, errRating, seterrRating }) => {
   count = Math.min(count, 10);
   const [errors, setErrors] = useState([]);
   useEffect(() => {
@@ -12,7 +12,7 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
     setInputs(initialInputs);
     setErrors(Array.from({ length: count }, () => false));
     setDone(Array.from({ length: count }, () => false));
-  }, [count]);
+  }, [count, setInputs, setErrors, setDone]);
 
   useEffect(() => {
   },[inputs, errors, done]);
@@ -94,6 +94,7 @@ const InputGenerator = ({ count, inputs, setInputs, done, setDone }) => {
               <tr>
                 <th style={{ textAlign: "left" }} className="top left">
                   Problems
+                  <div> <span className="star small">{errRating}</span></div>
                 </th>
               </tr>
             </thead>

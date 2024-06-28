@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputGenerator from "./ratings";
 import Invite from "./invite";
+import SuccessModal from "./contestModal";
 import "./App.css";
 
 const WrappedForm = () => {
@@ -16,34 +17,89 @@ const WrappedForm = () => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
 
+  const [errNameMess, setErrNameMess] = useState('');
+  const [errDuration, setErrDuration] = useState('');
+  const [errProblems, setErrProblems] = useState('');
+  const [errStartTime, setErrStartTime] = useState('');
+  const [errInvitedUsers, setErrInvitedUsers] = useState('');
+  const [errRating, setErrRating] = useState(''); 
+  const [createSuccess, setCreateSuccess] = useState(false);
+
   const handleProblemChange = (e) => {
     const newProblem = parseInt(e.target.value);
+    if(newProblem === null || newProblem === '' || newProblem === 0 || isNaN(newProblem)){
+      setnumberOfProblems(0);
+      return;
+    }
+    if(newProblem > 10){
+      setnumberOfProblems(10);
+      setErrProblems('');
+      return;
+    }
     setnumberOfProblems(newProblem);
+
+    if(e.target.value !== ''){
+      setErrProblems('');
+    }
   };
 
   const handleDurationChange = (e) => {
     let newDuration = parseInt(e.target.value);
-    if (newDuration > 240) {
-      newDuration = 240;
-    }
-    setcontestDuration(newDuration);
+  if (isNaN(newDuration)) {
+    // setcontestDuration(0);
+    setErrDuration('Please enter a valid number');
+    return;
+  }
+  
+  // newDuration = Math.max(10, Math.min(newDuration, 240));
+  
+  setcontestDuration(newDuration);
+  setErrDuration(newDuration >= 10 && newDuration <= 240 ? '' : 'Duration must be between 10 and 240 minutes');
   };
 
   const handleContestNameChange = (e) => {
     setContestName(e.target.value);
+    if(e.target.value !== ''){
+      setErrNameMess('');
+    }
     // console.log(contestName);
   };
 
   const handleStartTimeChange = (e) => {
     setStartTime(e.target.value);
+    if(e.target.value !== ''){
+      setErrStartTime('');
+    }
   };
 
 
   const handleSubmit = async (e) => {
-    setLoading(true);
+    if(contestName === ''){
+      setErrNameMess('Please enter the contest name');
+      return;
+    }
+    if(contestDuration === 0){
+      setErrDuration('Please enter the contest duration');
+      return;
+    }
+    if(contestDuration < 10 || contestDuration > 240){
+      setErrDuration('Duration must be between 10 and 240 minutes');
+      return;
+    }
+    if(numberOfProblems === 0 || numberOfProblems === '' || numberOfProblems === null || isNaN(numberOfProblems)){
+      setErrProblems('Please enter atleast one problem');
+      return;
+    }
+    if(startTime === '' || errStartTime !== ''){
+      setErrStartTime('Please enter the start time');
+      return;
+    }
+    if(invitedUsers.length === 0){
+      setErrInvitedUsers('Please invite atleast one user');
+      return;
+    }
     e.preventDefault();
-    alert("Submitted");
-
+    
     let f = 0;
     for (let i = 0; i < done.length; i++) {
       if (!done[i]) {
@@ -51,11 +107,21 @@ const WrappedForm = () => {
         break;
       }
     }
-
+    
     if (f === 1) {
-      alert("Please fill all the fields correctly");
+      setErrRating('Please fill all the fields correctly');
       return;
     }
+    
+    setErrDuration('');
+    setErrNameMess('');
+    setErrProblems('');
+    setErrStartTime('');
+    setErrInvitedUsers('');
+    setErrRating('');
+
+
+    setLoading(true);
     const formData = {
       contestName,
       contestDuration,
@@ -65,7 +131,7 @@ const WrappedForm = () => {
       inputs
     };
     // console.log(formData);  
-
+    
     try{
       const response = await fetch("http://localhost:5000/process",{
         method: "POST",
@@ -74,12 +140,15 @@ const WrappedForm = () => {
         },
         body: JSON.stringify(formData)
       });
+      // alert("Submitted");
 
       if(response.ok){
         const jsonResponse = await response.json();
         console.log(jsonResponse);
         setResponse(jsonResponse);
-        alert("Contest Created");
+        setCreateSuccess(true);
+        setLoading(false);
+        // alert("Here is your contest link");
       }
       else{
         throw new Error("Request to submit failed!");
@@ -87,18 +156,22 @@ const WrappedForm = () => {
     }
     catch(error){
       console.error('Error submitting form:', error);
-      alert('Error submitting form');
+      alert('Error making contest!');
     }
     finally{
       setLoading(false);
-      alert(response);
+      // alert({response});
     }
   };
   return (
     <>
+    {
+      createSuccess && response && (
+        <SuccessModal link={response} />
+      )}
     {loading && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-          <p>Loading...</p>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.8)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <p className="load">Loading...<br/>Don't Refresh</p>
         </div>
       )}
       <form
@@ -123,6 +196,7 @@ const WrappedForm = () => {
                   onChange={handleContestNameChange}
                   type="text"
                 />
+              
               </td>
             </tr>
             <tr className="subscription-row">
@@ -135,9 +209,9 @@ const WrappedForm = () => {
                   >
                     &nbsp;
                   </span>
-                  <span className="notice for__contestName smaller contest-profile-row">
-                    &nbsp;
-                  </span>
+                  {/* <span className="notice for__contestName smaller contest-profile-row"> */}
+                  <span className="star small">{errNameMess}</span>&nbsp;
+                  {/* </span> */}
                 </div>
               </td>
             </tr>
@@ -175,7 +249,7 @@ const WrappedForm = () => {
                     className="notice for__contestDuration smaller contest-profile-row"
                     style={{ fontFamily: "Lexend" }}
                   >
-                    Contest duration in minutes&nbsp;
+                    {errDuration === '' ? "Contest duration in minutes" : <span className="star small">{errDuration}</span>} &nbsp;
                   </span>
                 </div>
               </td>
@@ -213,7 +287,7 @@ const WrappedForm = () => {
                     className="notice for__contestDuration smaller contest-profile-row"
                     style={{ fontFamily: "Lexend" }}
                   >
-                    Less than 10&nbsp;
+                    {errProblems === '' ? "Number of problems in the contest" : <span className="star small">{errProblems}</span>} &nbsp;
                   </span>
                 </div>
               </td>
@@ -241,17 +315,17 @@ const WrappedForm = () => {
                 <div className="shiftUp error__contestDuration">
                   <span
                     className="error for__contestDuration smaller contest-profile-row"
-                    style={{ display: "none" }}
+                    // style={{ display: "none" }}
                   >
-                    &nbsp;
+                    <span className="star small">{errStartTime}</span>
                   </span>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <Invite invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} />
-        <InputGenerator count={numberOfProblems} inputs={inputs} setInputs={setInputs} done={done} setDone={setDone} />
+        <Invite invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} errInvitedUsers={errInvitedUsers} setErrInvitedUsers={setErrInvitedUsers} />
+        <InputGenerator count={numberOfProblems} inputs={inputs} setInputs={setInputs} done={done} setDone={setDone} errRating={errRating} setErrRating={setErrRating} />
         <input
           type="button"
           className="submit-btn"

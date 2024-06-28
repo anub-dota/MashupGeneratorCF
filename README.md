@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=150px height=150px src="code-forces.png" alt="Project logo"></a>
+ <img width=150px height=150px src="/assets/code-forces.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Codeforces Mashup Generator</h3>

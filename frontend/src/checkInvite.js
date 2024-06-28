@@ -1,6 +1,6 @@
 import React from "react";
 
-const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
+const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers, errInvitedUsers, setErrInvitedUsers}) => {
 
   const handleDeleteClick = (index) => {
     setInvitedUsers((prevUsers) => {
@@ -42,7 +42,8 @@ const CheckInvite = ({ showSearch, invitedUsers, setInvitedUsers }) => {
             <thead>
               <tr>
                 <th style={{ textAlign: "left" }} className="top left">
-                  Handle
+                  Handle 
+                    <div> <span className="star small">{errInvitedUsers}</span></div>
                 </th>
               </tr>
             </thead>

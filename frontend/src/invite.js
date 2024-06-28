@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 // import DiffOptions from "./Diffoptions";
 import CheckInvite from "./checkInvite";
 
-const Invite = ({invitedUsers, setInvitedUsers}) => {
+const Invite = ({invitedUsers, setInvitedUsers, errInvitedUsers, setErrInvitedUsers}) => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchOptions, setSearchOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,18 +34,18 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
       // console.log(data);
       setInvitedUsers((prevUsers) => {
         let f = 0;
-        prevUsers.map((user) => {
+        prevUsers.forEach((user) => {
           if (user.name === data.name) {
             f = 1;
           }
-        })
+        });
         if (f === 0) {
           return [...prevUsers, data];
-        }
-        else{
+        } else {
           return [...prevUsers];
         }
       });
+      
   
 
       setSearchTermObject(data);
@@ -54,6 +54,11 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
     }
   }
 
+  useEffect(() => {
+    if(invitedUsers.length > 0){
+      setErrInvitedUsers("");
+    }
+  }, [invitedUsers, setErrInvitedUsers]);
 
   const handleAddClick = () => {
     if (searchTermObject) {
@@ -62,6 +67,7 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
         setSearchOptions([]);
       });
     }
+   
     // console.log(invitedUsers);
   };
   const handleAddOptionClick = (option) => {
@@ -190,14 +196,14 @@ const Invite = ({invitedUsers, setInvitedUsers}) => {
               </form>
             </>
           )}
-          <a className="addInvitation" onClick={handleInviteClick}>
-            <img src="//codeforces.org/s/34596/images/icons/new-problem-16x16.png" />
+          <button className="addInvitation" onClick={handleInviteClick} type="button">
+            <img src="//codeforces.org/s/34596/images/icons/new-problem-16x16.png" alt="add" />
             {showSearch ? "Hide Panel" : "Invite users"}
-          </a>
+          </button>
         </div>
       </div>
 
-      <CheckInvite showSearch={showSearch} invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} />
+      <CheckInvite showSearch={showSearch} invitedUsers={invitedUsers} setInvitedUsers={setInvitedUsers} errInvitedUsers={errInvitedUsers} setErrInvitedUsers={setErrInvitedUsers} />
     </>
   );
 };
