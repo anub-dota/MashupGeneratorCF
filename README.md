@@ -48,7 +48,7 @@ pip install -r requirements.txt
 Firstly clone the repository to your local machine by running the following command in git bash
 
 ```
-git clone https://github.com/anub-dota/MashupGeneratorCF
+git clone https://github.com/anub-dota/MashupGeneratorCF.git
 ```
 
 Get in the working directory and open two powershell terminals
