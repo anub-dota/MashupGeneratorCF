@@ -80,12 +80,19 @@ After running the above commands go to
 http://localhost:3000/
 ```
 
-<p align="center">
-  <a href="" rel="noopener">
- <img width=150px height=150px src="/assets/1.png" alt="1"></a>
-</p>
+Now lets make a sample contest.
 
+Here is a thorough walkthrough.
 
+![image](./assets/1.png)
+
+![image](./assets/2.png)
+
+![image](./assets/3.png)
+
+![image](./assets/4.png)
+
+![image](./assets/5.png)
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [React](https://react.dev/) - Web Frontend Framework
@@ -100,4 +107,4 @@ http://localhost:3000/
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-- Mike Myrzayanov for [this](https://codeforces.com/) wonderful site
+- Mike Mirzayanov for [this](https://codeforces.com/) wonderful site
